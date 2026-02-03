@@ -4,10 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Richard Pimentel - Desenvolvedor Full Stack em início de carreira, especializado em React, Node.js e Kotlin" />
   <title>Richard Pimentel — Portfólio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
   <style>
     :root{
       --bg:#000000;
@@ -492,6 +494,202 @@
       line-height:1.7;
     }
 
+    /* Skills Grid */
+    .skills-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:30px;
+      margin-top:60px;
+    }
+
+    .skill-category{
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:24px;
+      padding:35px;
+      position:relative;
+      overflow:hidden;
+      transition:all .4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .skill-category::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:4px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3));
+      transform:scaleX(0);
+      transition:transform .4s ease;
+    }
+
+    .skill-category:hover{
+      transform:translateY(-10px);
+      border-color:var(--accent);
+      box-shadow:0 20px 60px rgba(255,0,110,.3);
+    }
+
+    .skill-category:hover::before{transform:scaleX(1)}
+
+    .skill-category-title{
+      font-size:20px;
+      font-weight:700;
+      margin-bottom:25px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .skill-category-title i{
+      font-size:28px;
+      color:var(--accent);
+    }
+
+    .skill-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .skill-item{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 16px;
+      background:rgba(255,0,110,.08);
+      border:1px solid rgba(255,0,110,.2);
+      border-radius:20px;
+      font-size:14px;
+      font-weight:500;
+      transition:all .3s ease;
+    }
+
+    .skill-item i{
+      font-size:18px;
+    }
+
+    .skill-item:hover{
+      background:rgba(255,0,110,.15);
+      border-color:var(--accent);
+      transform:translateY(-2px);
+    }
+
+    /* Timeline Education */
+    .timeline{
+      margin-top:60px;
+      position:relative;
+      padding-left:40px;
+    }
+
+    .timeline::before{
+      content:'';
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:2px;
+      background:linear-gradient(180deg,var(--accent),var(--accent-2),var(--accent-3));
+    }
+
+    .timeline-item{
+      position:relative;
+      padding:30px;
+      margin-bottom:40px;
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:20px;
+      transition:all .3s ease;
+    }
+
+    .timeline-item::before{
+      content:'';
+      position:absolute;
+      left:-52px;
+      top:40px;
+      width:20px;
+      height:20px;
+      background:var(--accent);
+      border:3px solid var(--bg);
+      border-radius:50%;
+      box-shadow:0 0 20px var(--accent);
+    }
+
+    .timeline-item:hover{
+      transform:translateX(10px);
+      border-color:var(--accent);
+      box-shadow:0 10px 30px rgba(255,0,110,.2);
+    }
+
+    .timeline-year{
+      font-family:'JetBrains Mono',monospace;
+      font-size:14px;
+      color:var(--accent);
+      font-weight:600;
+      margin-bottom:10px;
+    }
+
+    .timeline-title{
+      font-size:24px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .timeline-institution{
+      font-size:16px;
+      color:var(--accent-2);
+      margin-bottom:15px;
+      font-weight:600;
+    }
+
+    .timeline-description{
+      color:var(--muted);
+      line-height:1.7;
+      font-size:15px;
+    }
+
+    /* Competências */
+    .competencies-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+      margin-top:60px;
+    }
+
+    .competency-badge{
+      padding:20px 25px;
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:16px;
+      text-align:center;
+      font-weight:600;
+      font-size:15px;
+      transition:all .3s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .competency-badge::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(90deg,transparent,rgba(255,0,110,.1),transparent);
+      transition:left .5s ease;
+    }
+
+    .competency-badge:hover{
+      border-color:var(--accent);
+      transform:translateY(-5px);
+      box-shadow:0 10px 30px rgba(255,0,110,.2);
+    }
+
+    .competency-badge:hover::before{
+      left:100%;
+    }
+
     /* Cards de projetos únicos */
     .projects-grid{
       display:grid;
@@ -514,6 +712,8 @@
     .project-card:nth-child(1){transform:rotate(-2deg)}
     .project-card:nth-child(2){transform:rotate(1deg)}
     .project-card:nth-child(3){transform:rotate(-1deg)}
+    .project-card:nth-child(4){transform:rotate(2deg)}
+    .project-card:nth-child(5){transform:rotate(-1.5deg)}
 
     .project-card:hover{
       transform:rotate(0deg) translateY(-10px) scale(1.02);
@@ -720,7 +920,9 @@
     @media (max-width:1024px){
       .hero-content{grid-template-columns:1fr;gap:60px}
       .avatar-wrapper{order:-1;width:300px;height:300px}
+      .skills-grid{grid-template-columns:repeat(2,1fr)}
       .projects-grid{grid-template-columns:repeat(2,1fr)}
+      .competencies-grid{grid-template-columns:repeat(3,1fr)}
       .about-content{grid-template-columns:1fr}
       .contact-grid{grid-template-columns:1fr}
     }
@@ -732,7 +934,9 @@
       .hero h1{font-size:48px}
       .section-title{font-size:40px}
       .section-number{font-size:80px}
+      .skills-grid{grid-template-columns:1fr}
       .projects-grid{grid-template-columns:1fr}
+      .competencies-grid{grid-template-columns:repeat(2,1fr)}
       section{padding:60px 20px}
     }
 
@@ -762,7 +966,10 @@
     <a href="#home" class="logo">RP</a>
     <nav>
       <a href="#sobre">Sobre</a>
+      <a href="#habilidades">Habilidades</a>
+      <a href="#educacao">Educação</a>
       <a href="#projetos">Projetos</a>
+      <a href="#competencias">Competências</a>
       <a href="#contato">Contato</a>
     </nav>
     <a href="https://github.com/richard-pimetel" target="_blank" rel="noreferrer" class="github-btn">GitHub</a>
@@ -774,16 +981,16 @@
         <div class="badge"><span></span>Disponível para novos projetos</div>
         <h1>
           Olá, eu sou<br>
-          <span class="gradient">Richard</span>
+          <span class="gradient">Richard Pimentel</span>
         </h1>
-        <p class="subtitle">Desenvolvedor focado em projetos web e experiências interativas.</p>
+        <p class="subtitle">Desenvolvedor Full Stack Jr.</p>
         <p class="description">
-          Esta página foi criada para divulgar meu GitHub e alguns dos projetos que desenvolvi. 
-          Aqui você encontrará uma seleção dos meus trabalhos mais recentes.
+          Desenvolvedor em início de carreira, formado em Desenvolvimento de Sistemas pelo Senai Jandira. 
+          Apaixonado por resolver problemas através da tecnologia, unindo design, lógica e inovação para criar experiências digitais eficientes e modernas.
         </p>
         <div class="hero-buttons">
           <a href="#projetos" class="btn btn-primary">Ver projetos</a>
-          <a href="#sobre" class="btn btn-secondary">Sobre mim</a>
+          <a href="#contato" class="btn btn-secondary">Entrar em contato</a>
         </div>
       </div>
       <div class="avatar-container">
@@ -802,18 +1009,22 @@
         <div class="section-number">01</div>
         <h2 class="section-title">Sobre mim</h2>
         <p class="section-subtitle">
-          Sou um desenvolvedor em início de carreira, construindo meu portfólio com projetos práticos e aprendizados constantes.
+          Desenvolvedor em início de carreira com paixão por tecnologia e aprendizado contínuo.
         </p>
       </div>
       <div class="about-content">
         <div class="about-text">
           <p>
-            Tenho interesse em front-end, interfaces modernas e experiências interativas. 
-            Estou estudando, testando ideias e transformando exercícios em aplicações reais.
+            Tenho paixão por resolver problemas por meio da tecnologia e gosto de unir design, lógica e inovação para criar experiências digitais eficientes e modernas.
           </p>
           <p>
-            Gosto de evoluir iterando, melhorando detalhes e buscando clareza no código e no design. 
-            Uma seleção de projetos que mostram minha evolução, organização de layout e atenção à experiência do usuário.
+            Atualmente, foco meu aprendizado em desenvolvimento Full Stack, com atuação tanto no Front End quanto no Back End, além de explorar práticas de DevOps e Cloud Computing.
+          </p>
+          <p>
+            Busco constantemente aprimorar minhas habilidades, aprender novas tecnologias e contribuir em projetos que agreguem valor real às pessoas e às empresas.
+          </p>
+          <p>
+            <strong>Objetivo Profissional:</strong> Ingressar como Desenvolvedor Júnior em uma equipe de tecnologia que valorize aprendizado contínuo, colaboração e boas práticas. Quero aplicar meus conhecimentos em React, Node.js e Kotlin, expandindo meu domínio sobre bancos de dados, APIs, integração de sistemas e arquitetura moderna de software.
           </p>
         </div>
         <div class="social-links">
@@ -821,14 +1032,140 @@
             <strong>GitHub</strong>
             <span>richard-pimetel</span>
           </a>
-          <a href="www.linkedin.com/in/richard-pimentel-356a722ab" class="social-link" target="_blank" rel="noreferrer">
+          <a href="https://www.linkedin.com/in/richard-pimentel-356a722ab" class="social-link" target="_blank" rel="noreferrer">
             <strong>LinkedIn</strong>
             <span>richard-pimentel</span>
           </a>
-          <a href="#" class="social-link" style="opacity:.5;cursor:not-allowed">
-            <strong>Outros</strong>
-            <span>em breve</span>
+          <a href="mailto:richardpiment230@gmail.com" class="social-link">
+            <strong>E-mail</strong>
+            <span>richardpiment230@gmail.com</span>
           </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="habilidades">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <h2 class="section-title">Habilidades Técnicas</h2>
+        <p class="section-subtitle">
+          Tecnologias e ferramentas que domino e utilizo no desenvolvimento de soluções completas.
+        </p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-category" data-testid="skill-frontend">
+          <h3 class="skill-category-title">
+            <i class="devicon-react-original colored"></i>
+            Front End
+          </h3>
+          <div class="skill-list">
+            <span class="skill-item"><i class="devicon-react-original colored"></i> React</span>
+            <span class="skill-item"><i class="devicon-typescript-plain colored"></i> TypeScript</span>
+            <span class="skill-item"><i class="devicon-tailwindcss-original colored"></i> Tailwind CSS</span>
+            <span class="skill-item"><i class="devicon-angularjs-plain colored"></i> Angular</span>
+            <span class="skill-item"><i class="devicon-javascript-plain colored"></i> JavaScript</span>
+            <span class="skill-item"><i class="devicon-html5-plain colored"></i> HTML5</span>
+            <span class="skill-item"><i class="devicon-css3-plain colored"></i> CSS3</span>
+          </div>
+        </div>
+
+        <div class="skill-category" data-testid="skill-backend">
+          <h3 class="skill-category-title">
+            <i class="devicon-nodejs-plain colored"></i>
+            Back End
+          </h3>
+          <div class="skill-list">
+            <span class="skill-item"><i class="devicon-nodejs-plain colored"></i> Node.js</span>
+            <span class="skill-item"><i class="devicon-python-plain colored"></i> Python</span>
+            <span class="skill-item"><i class="devicon-prisma-original colored"></i> Prisma</span>
+            <span class="skill-item"><i class="devicon-express-original"></i> Express.js</span>
+            <span class="skill-item">API REST</span>
+          </div>
+        </div>
+
+        <div class="skill-category" data-testid="skill-mobile">
+          <h3 class="skill-category-title">
+            <i class="devicon-kotlin-plain colored"></i>
+            Mobile
+          </h3>
+          <div class="skill-list">
+            <span class="skill-item"><i class="devicon-kotlin-plain colored"></i> Kotlin</span>
+            <span class="skill-item"><i class="devicon-jetpackcompose-plain colored"></i> Jetpack Compose</span>
+            <span class="skill-item"><i class="devicon-androidstudio-plain colored"></i> Android Studio</span>
+            <span class="skill-item">Material Design</span>
+          </div>
+        </div>
+
+        <div class="skill-category" data-testid="skill-database">
+          <h3 class="skill-category-title">
+            <i class="devicon-mysql-plain colored"></i>
+            Banco de Dados
+          </h3>
+          <div class="skill-list">
+            <span class="skill-item"><i class="devicon-mysql-plain colored"></i> MySQL</span>
+            <span class="skill-item"><i class="devicon-postgresql-plain colored"></i> PostgreSQL</span>
+            <span class="skill-item"><i class="devicon-sqlite-plain colored"></i> SQLite</span>
+          </div>
+        </div>
+
+        <div class="skill-category" data-testid="skill-devops">
+          <h3 class="skill-category-title">
+            <i class="devicon-docker-plain colored"></i>
+            DevOps & Cloud
+          </h3>
+          <div class="skill-list">
+            <span class="skill-item"><i class="devicon-git-plain colored"></i> Git</span>
+            <span class="skill-item"><i class="devicon-github-original"></i> GitHub Actions</span>
+            <span class="skill-item"><i class="devicon-docker-plain colored"></i> Docker</span>
+            <span class="skill-item"><i class="devicon-azure-plain colored"></i> Azure</span>
+            <span class="skill-item"><i class="devicon-vercel-original"></i> Vercel</span>
+            <span class="skill-item"><i class="devicon-linux-plain"></i> Linux</span>
+          </div>
+        </div>
+
+        <div class="skill-category" data-testid="skill-management">
+          <h3 class="skill-category-title">
+            <i class="devicon-trello-plain colored"></i>
+            Gestão de Projetos
+          </h3>
+          <div class="skill-list">
+            <span class="skill-item">Scrum</span>
+            <span class="skill-item">Kanban</span>
+            <span class="skill-item"><i class="devicon-trello-plain colored"></i> Trello</span>
+            <span class="skill-item"><i class="devicon-jira-plain colored"></i> Jira</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="educacao">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <h2 class="section-title">Educação</h2>
+        <p class="section-subtitle">
+          Minha jornada de aprendizado e formação acadêmica.
+        </p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item" data-testid="education-senai">
+          <div class="timeline-year">2024 – 2025</div>
+          <h3 class="timeline-title">Desenvolvimento de Sistemas</h3>
+          <p class="timeline-institution">Senai Jandira</p>
+          <p class="timeline-description">
+            Curso técnico focado em desenvolvimento de software, abrangendo front-end, back-end, mobile, banco de dados e metodologias ágeis. Durante o curso, desenvolvi projetos práticos aplicando React, Node.js, Kotlin e outras tecnologias modernas.
+          </p>
+        </div>
+        <div class="timeline-item" data-testid="education-highschool">
+          <div class="timeline-year">Concluído</div>
+          <h3 class="timeline-title">Ensino Médio</h3>
+          <p class="timeline-institution">Completo</p>
+          <p class="timeline-description">
+            Formação básica que serviu como base para minha entrada no mundo da tecnologia e desenvolvimento de software.
+          </p>
         </div>
       </div>
     </div>
@@ -837,31 +1174,69 @@
   <section id="projetos">
     <div class="section-container">
       <div class="section-header">
-        <div class="section-number">02</div>
+        <div class="section-number">04</div>
         <h2 class="section-title">Projetos em destaque</h2>
         <p class="section-subtitle">
-          Alguns projetos para mostrar meu estilo de front-end e a forma como eu organizo páginas, componentes e interações.
+          Uma seleção dos meus trabalhos mais recentes, demonstrando minhas habilidades em desenvolvimento web e interfaces modernas.
         </p>
       </div>
       <div class="projects-grid">
-        <article class="project-card">
+        <article class="project-card" data-testid="project-planilha">
+          <span class="project-tag">Aplicação Web</span>
+          <h3 class="project-title">Planilha de Arquivos</h3>
+          <p class="project-desc">Aplicação web para gerenciamento simples e visual de documentos, com interface intuitiva e organização eficiente.</p>
+          <a href="https://planilha-de-arquivo.vercel.app" target="_blank" rel="noreferrer" class="project-link">Ver projeto</a>
+        </article>
+
+        <article class="project-card" data-testid="project-geografia">
+          <span class="project-tag">Plataforma Educacional</span>
+          <h3 class="project-title">Geografia One</h3>
+          <p class="project-desc">Plataforma educacional interativa sobre geografia, oferecendo conteúdos visuais e experiência de aprendizado envolvente.</p>
+          <a href="https://geografia-one.vercel.app" target="_blank" rel="noreferrer" class="project-link">Ver projeto</a>
+        </article>
+
+        <article class="project-card" data-testid="project-matematica">
           <span class="project-tag">Projeto Web</span>
-          <h3 class="project-title">Projeto de matemática</h3>
-          <p class="project-desc">Aplicação interativa de matemática com foco em aprendizado visual e exercícios práticos.</p>
+          <h3 class="project-title">Projeto de Matemática</h3>
+          <p class="project-desc">Aplicação interativa de matemática com foco em aprendizado visual e exercícios práticos para estudantes.</p>
           <a href="https://projeto-de-matematica.vercel.app/" target="_blank" rel="noreferrer" class="project-link">Ver projeto</a>
         </article>
-        <article class="project-card">
+
+        <article class="project-card" data-testid="project-certiseg">
           <span class="project-tag">Frontend</span>
           <h3 class="project-title">CertiSeg</h3>
           <p class="project-desc">Landing page de segurança e certificações, focada em comunicação clara e layout organizado.</p>
           <a href="https://richard-pimetel.github.io/CertiSeg/" target="_blank" rel="noreferrer" class="project-link">Ver projeto</a>
         </article>
-        <article class="project-card">
+
+        <article class="project-card" data-testid="project-tarot">
           <span class="project-tag">Interativo</span>
-          <h3 class="project-title">Projeto carta de tarot</h3>
-          <p class="project-desc">Projeto criativo de cartas de tarot, explorando animações, cores e experiência interativa.</p>
+          <h3 class="project-title">Projeto Carta de Tarot</h3>
+          <p class="project-desc">Projeto criativo de cartas de tarot, explorando animações, cores e experiência interativa única.</p>
           <a href="https://richard-pimetel.github.io/Projeto-carta-de-tarot/" target="_blank" rel="noreferrer" class="project-link">Ver projeto</a>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="competencias">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <h2 class="section-title">Competências Comportamentais</h2>
+        <p class="section-subtitle">
+          Soft skills que complementam minhas habilidades técnicas e contribuem para o sucesso em equipe.
+        </p>
+      </div>
+      <div class="competencies-grid">
+        <div class="competency-badge" data-testid="competency-leadership">Liderança</div>
+        <div class="competency-badge" data-testid="competency-communication">Comunicação Clara</div>
+        <div class="competency-badge" data-testid="competency-logic">Raciocínio Lógico</div>
+        <div class="competency-badge" data-testid="competency-organization">Organização</div>
+        <div class="competency-badge" data-testid="competency-planning">Planejamento</div>
+        <div class="competency-badge" data-testid="competency-learning">Aprendizado Rápido</div>
+        <div class="competency-badge" data-testid="competency-teamwork">Trabalho em Equipe</div>
+        <div class="competency-badge" data-testid="competency-proactivity">Proatividade</div>
       </div>
     </div>
   </section>
@@ -869,35 +1244,38 @@
   <section id="contato">
     <div class="section-container">
       <div class="section-header">
-        <div class="section-number">03</div>
+        <div class="section-number">06</div>
         <h2 class="section-title">Contato</h2>
-        <p class="section-subtitle">Se quiser trocar uma ideia sobre projetos ou oportunidades, me chama:</p>
+        <p class="section-subtitle">Vamos conversar sobre projetos, oportunidades ou trocar ideias sobre tecnologia.</p>
       </div>
       <div class="contact-grid">
-        <div class="contact-item">
+        <div class="contact-item" data-testid="contact-email">
           <strong>E-mail</strong>
-          <span>richardpiment230@gmail.com</span>
+          <a href="mailto:richardpiment230@gmail.com">richardpiment230@gmail.com</a>
         </div>
-        <div class="contact-item">
+        <div class="contact-item" data-testid="contact-github">
           <strong>GitHub</strong>
           <a href="https://github.com/richard-pimetel" target="_blank" rel="noreferrer">github.com/richard-pimetel</a>
         </div>
-        <div class="contact-item">
+        <div class="contact-item" data-testid="contact-linkedin">
           <strong>LinkedIn</strong>
-          <a href="https://www.linkedin.com/in/richard-pimentel-356a722ab/" target="_blank" rel="noreferrer">linkedin.com/in/richard-pimentel-356a722ab</a>
+          <a href="https://www.linkedin.com/in/richard-pimentel-356a722ab/" target="_blank" rel="noreferrer">linkedin.com/in/richard-pimentel</a>
         </div>
-        <div class="contact-item">
-          <strong>Outros</strong>
-          <a href="#" target="_blank" rel="noreferrer">em breve</a>
+        <div class="contact-item" data-testid="contact-location">
+          <strong>Localização</strong>
+          <span>São Paulo, Brasil</span>
         </div>
       </div>
     </div>
   </section>
 
   <footer>
-    <p>© <span id="ano"></span> Richard Pimentel — Portfólio</p>
-    <p><a href="https://github.com/richard-pimetel" target="_blank" rel="noreferrer">GitHub</a></p>
-    <p><a href="https://www.linkedin.com/in/richard-pimentel-356a722ab/" target="_blank" rel="noreferrer">LinkedIn</a></p>
+    <p>© <span id="ano"></span> Richard Pimentel — Portfólio de Desenvolvedor</p>
+    <p>Desenvolvido com paixão e muita dedicação</p>
+    <p>
+      <a href="https://github.com/richard-pimetel" target="_blank" rel="noreferrer">GitHub</a> • 
+      <a href="https://www.linkedin.com/in/richard-pimentel-356a722ab/" target="_blank" rel="noreferrer">LinkedIn</a>
+    </p>
   </footer>
 
   <script>
@@ -937,7 +1315,7 @@
       });
     });
 
-    // Scroll reveal
+    // Scroll reveal com Intersection Observer
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
@@ -952,11 +1330,22 @@
       });
     }, observerOptions);
 
-    document.querySelectorAll('.project-card, .section-header').forEach(el => {
+    // Aplicar animação aos elementos
+    document.querySelectorAll('.project-card, .section-header, .skill-category, .timeline-item, .competency-badge').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(30px)';
       el.style.transition = 'all .6s ease';
       observer.observe(el);
+    });
+
+    // Efeito parallax suave no background
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const shapes = document.querySelectorAll('.shape');
+      shapes.forEach((shape, index) => {
+        const speed = 0.5 + (index * 0.2);
+        shape.style.transform = `translateY(${scrolled * speed}px)`;
+      });
     });
   </script>
 </body>
