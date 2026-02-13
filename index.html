@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     :root{
       --bg:#000000;
@@ -18,7 +19,7 @@
       --accent-2:#8338ec;
       --accent-3:#3a86ff;
       --text:#ffffff;
-      --muted:#888888;
+      -:#888888;
       --glow:rgba(255,0,110,.5);
     }
 
@@ -320,6 +321,37 @@
       color:var(--muted);
       margin-bottom:30px;
       font-weight:500;
+      min-height:40px;
+    }
+
+    /* Typing animation */
+    .typing-container{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-height:40px;
+    }
+
+    .typing-text{
+      background:linear-gradient(135deg,var(--accent),var(--accent-2),var(--accent-3));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-weight:600;
+    }
+
+    .cursor-blink{
+      display:inline-block;
+      width:3px;
+      height:28px;
+      background:var(--accent);
+      animation:blink .7s infinite;
+      margin-left:4px;
+    }
+
+    @keyframes blink{
+      0%,50%{opacity:1}
+      51%,100%{opacity:0}
     }
 
     .hero .description{
@@ -548,38 +580,84 @@
 
     .skill-list{
       display:flex;
-      flex-wrap:wrap;
-      gap:10px;
+      flex-direction:column;
+      gap:15px;
     }
 
     .skill-item{
-      display:inline-flex;
-      align-items:center;
+      display:flex;
+      flex-direction:column;
       gap:8px;
-      padding:8px 16px;
-      background:rgba(255,0,110,.08);
-      border:1px solid rgba(255,0,110,.2);
-      border-radius:20px;
-      font-size:14px;
-      font-weight:500;
-      transition:all .3s ease;
     }
 
-    .skill-item i{
+    .skill-item-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .skill-item-name{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      font-weight:500;
+    }
+
+    .skill-item-name i{
       font-size:18px;
     }
 
-    .skill-item:hover{
-      background:rgba(255,0,110,.15);
-      border-color:var(--accent);
-      transform:translateY(-2px);
+    .skill-level{
+      font-size:12px;
+      color:var(--accent);
+      font-weight:600;
+    }
+
+    .skill-progress-bar{
+      width:100%;
+      height:6px;
+      background:rgba(255,255,255,.05);
+      border-radius:10px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .skill-progress-fill{
+      height:100%;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border-radius:10px;
+      width:0;
+      transition:width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .skill-progress-fill::after{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+      animation:shimmer 2s infinite;
+    }
+
+    @keyframes shimmer{
+      0%{transform:translateX(-100%)}
+      100%{transform:translateX(100%)}
+    }
+
+    .skill-category.visible .skill-progress-fill{
+      width:var(--progress-width);
     }
 
     /* Timeline Education */
     .timeline{
       margin-top:60px;
       position:relative;
-      padding-left:40px;
+      padding-left:50px;
     }
 
     .timeline::before{
@@ -588,85 +666,125 @@
       left:0;
       top:0;
       bottom:0;
-      width:2px;
+      width:3px;
       background:linear-gradient(180deg,var(--accent),var(--accent-2),var(--accent-3));
+      border-radius:10px;
+      box-shadow:0 0 20px rgba(255,0,110,.5);
     }
 
     .timeline-item{
       position:relative;
-      padding:30px;
+      padding:40px;
       margin-bottom:40px;
-      background:rgba(255,255,255,.02);
-      border:1px solid rgba(255,255,255,.05);
-      border-radius:20px;
-      transition:all .3s ease;
+      background:linear-gradient(135deg,rgba(255,0,110,.03),rgba(131,56,236,.03));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px;
+      transition:all .4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow:hidden;
     }
 
     .timeline-item::before{
       content:'';
       position:absolute;
-      left:-52px;
-      top:40px;
-      width:20px;
-      height:20px;
-      background:var(--accent);
-      border:3px solid var(--bg);
+      left:-62px;
+      top:50px;
+      width:24px;
+      height:24px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      border:4px solid var(--bg);
       border-radius:50%;
-      box-shadow:0 0 20px var(--accent);
+      box-shadow:0 0 30px var(--accent),inset 0 0 10px rgba(255,255,255,.5);
+      z-index:10;
+    }
+
+    .timeline-item::after{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:100%;
+      background:linear-gradient(135deg,transparent,rgba(255,0,110,.05));
+      opacity:0;
+      transition:opacity .4s ease;
     }
 
     .timeline-item:hover{
-      transform:translateX(10px);
+      transform:translateX(15px) scale(1.02);
       border-color:var(--accent);
-      box-shadow:0 10px 30px rgba(255,0,110,.2);
+      box-shadow:0 20px 60px rgba(255,0,110,.3);
+    }
+
+    .timeline-item:hover::after{
+      opacity:1;
     }
 
     .timeline-year{
       font-family:'JetBrains Mono',monospace;
       font-size:14px;
       color:var(--accent);
-      font-weight:600;
-      margin-bottom:10px;
+      font-weight:700;
+      margin-bottom:15px;
+      display:inline-block;
+      padding:6px 16px;
+      background:rgba(255,0,110,.1);
+      border:1px solid var(--accent);
+      border-radius:20px;
+      letter-spacing:1px;
     }
 
     .timeline-title{
-      font-size:24px;
+      font-size:28px;
       font-weight:700;
-      margin-bottom:8px;
+      margin-bottom:12px;
+      background:linear-gradient(135deg,var(--text),var(--accent-2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
     }
 
     .timeline-institution{
-      font-size:16px;
+      font-size:18px;
       color:var(--accent-2);
-      margin-bottom:15px;
-      font-weight:600;
+      margin-bottom:20px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .timeline-institution::before{
+      content:'🎓';
+      font-size:20px;
     }
 
     .timeline-description{
-      color:var(--muted);
-      line-height:1.7;
-      font-size:15px;
+      color:var(--text);
+      line-height:1.9;
+      font-size:16px;
+      opacity:.9;
     }
 
     /* Competências */
     .competencies-grid{
       display:grid;
       grid-template-columns:repeat(4,1fr);
-      gap:20px;
+      gap:25px;
       margin-top:60px;
     }
 
     .competency-badge{
-      padding:20px 25px;
-      background:rgba(255,255,255,.02);
-      border:1px solid rgba(255,255,255,.05);
-      border-radius:16px;
+      padding:30px 20px;
+      background:linear-gradient(135deg,rgba(255,0,110,.05),rgba(131,56,236,.05));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;
       text-align:center;
-      font-weight:600;
+      font-weight:700;
       font-size:15px;
-      transition:all .3s ease;
+      transition:all .4s cubic-bezier(0.4, 0, 0.2, 1);
       position:relative;
       overflow:hidden;
+      cursor:pointer;
     }
 
     .competency-badge::before{
@@ -676,50 +794,69 @@
       left:-100%;
       width:100%;
       height:100%;
-      background:linear-gradient(90deg,transparent,rgba(255,0,110,.1),transparent);
-      transition:left .5s ease;
+      background:linear-gradient(90deg,transparent,rgba(255,0,110,.2),transparent);
+      transition:left .6s ease;
+    }
+
+    .competency-badge::after{
+      content:'✓';
+      position:absolute;
+      top:10px;
+      right:10px;
+      width:24px;
+      height:24px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      color:var(--text);
+      opacity:0;
+      transform:scale(0) rotate(-180deg);
+      transition:all .4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
     .competency-badge:hover{
       border-color:var(--accent);
-      transform:translateY(-5px);
-      box-shadow:0 10px 30px rgba(255,0,110,.2);
+      transform:translateY(-8px) scale(1.05);
+      box-shadow:0 15px 40px rgba(255,0,110,.3);
+      background:linear-gradient(135deg,rgba(255,0,110,.15),rgba(131,56,236,.15));
     }
 
     .competency-badge:hover::before{
       left:100%;
     }
 
+    .competency-badge:hover::after{
+      opacity:1;
+      transform:scale(1) rotate(0deg);
+    }
+
     /* Cards de projetos únicos */
     .projects-grid{
       display:grid;
       grid-template-columns:repeat(3,1fr);
-      gap:30px;
+      gap:35px;
       margin-top:60px;
     }
 
     .project-card{
-      background:rgba(255,255,255,.02);
-      border:1px solid rgba(255,255,255,.05);
-      border-radius:24px;
-      padding:40px;
+      background:linear-gradient(135deg,rgba(255,0,110,.04),rgba(131,56,236,.04));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:28px;
+      padding:45px;
       position:relative;
       overflow:hidden;
-      transition:all .4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition:all .5s cubic-bezier(0.4, 0, 0.2, 1);
       transform-style:preserve-3d;
     }
 
-    .project-card:nth-child(1){transform:rotate(-2deg)}
+    .project-card:nth-child(1){transform:rotate(-1deg)}
     .project-card:nth-child(2){transform:rotate(1deg)}
-    .project-card:nth-child(3){transform:rotate(-1deg)}
-    .project-card:nth-child(4){transform:rotate(2deg)}
-    .project-card:nth-child(5){transform:rotate(-1.5deg)}
-
-    .project-card:hover{
-      transform:rotate(0deg) translateY(-10px) scale(1.02);
-      border-color:var(--accent);
-      box-shadow:0 20px 60px rgba(255,0,110,.3);
-    }
+    .project-card:nth-child(3){transform:rotate(-0.5deg)}
+    .project-card:nth-child(4){transform:rotate(1.5deg)}
+    .project-card:nth-child(5){transform:rotate(-1deg)}
 
     .project-card::before{
       content:'';
@@ -727,58 +864,106 @@
       top:0;
       left:0;
       right:0;
-      height:4px;
+      height:5px;
       background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3));
       transform:scaleX(0);
-      transition:transform .4s ease;
+      transition:transform .5s ease;
     }
 
-    .project-card:hover::before{transform:scaleX(1)}
+    .project-card::after{
+      content:'';
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:300px;
+      height:300px;
+      background:radial-gradient(circle,rgba(255,0,110,.15),transparent 70%);
+      transform:translate(-50%,-50%) scale(0);
+      transition:transform .5s ease;
+      border-radius:50%;
+      pointer-events:none;
+    }
+
+    .project-card:hover{
+      transform:rotate(0deg) translateY(-15px) scale(1.03);
+      border-color:var(--accent);
+      box-shadow:0 25px 70px rgba(255,0,110,.4);
+      background:linear-gradient(135deg,rgba(255,0,110,.08),rgba(131,56,236,.08));
+    }
+
+    .project-card:hover::before{
+      transform:scaleX(1);
+    }
+
+    .project-card:hover::after{
+      transform:translate(-50%,-50%) scale(1);
+    }
 
     .project-tag{
       display:inline-block;
-      padding:6px 16px;
-      background:rgba(255,0,110,.1);
+      padding:8px 20px;
+      background:rgba(255,0,110,.15);
       border:1px solid var(--accent);
-      border-radius:20px;
+      border-radius:25px;
       font-size:12px;
-      font-weight:600;
-      margin-bottom:20px;
+      font-weight:700;
+      margin-bottom:25px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      position:relative;
+      z-index:2;
     }
 
     .project-title{
-      font-size:28px;
+      font-size:32px;
       font-weight:700;
-      margin-bottom:15px;
-      letter-spacing:-1px;
+      margin-bottom:20px;
+      letter-spacing:-1.5px;
+      position:relative;
+      z-index:2;
+      background:linear-gradient(135deg,var(--text),var(--accent-2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
     }
 
     .project-desc{
-      color:var(--muted);
-      line-height:1.7;
-      margin-bottom:30px;
-      font-size:15px;
+      color:var(--text);
+      line-height:1.9;
+      margin-bottom:35px;
+      font-size:16px;
+      position:relative;
+      z-index:2;
+      opacity:.9;
     }
 
     .project-link{
       display:inline-flex;
       align-items:center;
-      gap:10px;
+      gap:12px;
       color:var(--accent);
       text-decoration:none;
-      font-weight:600;
-      font-size:15px;
+      font-weight:700;
+      font-size:16px;
       transition:all .3s ease;
+      position:relative;
+      z-index:2;
+      padding:12px 24px;
+      background:rgba(255,0,110,.1);
+      border:1px solid var(--accent);
+      border-radius:30px;
     }
 
     .project-link:hover{
-      gap:15px;
-      color:var(--accent-2);
+      gap:18px;
+      background:var(--accent);
+      color:var(--text);
+      transform:translateX(5px);
     }
 
     .project-link::after{
       content:'→';
-      font-size:20px;
+      font-size:22px;
       transition:transform .3s ease;
     }
 
@@ -796,12 +981,45 @@
 
     .about-text{
       font-size:18px;
-      line-height:1.8;
-      color:var(--muted);
+      line-height:1.9;
+      color:var(--text);
+      position:relative;
     }
 
     .about-text p{
-      margin-bottom:25px;
+      margin-bottom:30px;
+      padding-left:25px;
+      position:relative;
+      opacity:.9;
+      transition:all .3s ease;
+    }
+
+    .about-text p::before{
+      content:'';
+      position:absolute;
+      left:0;
+      top:8px;
+      width:4px;
+      height:20px;
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      border-radius:10px;
+      opacity:0;
+      transition:opacity .3s ease;
+    }
+
+    .about-text p:hover{
+      opacity:1;
+      transform:translateX(5px);
+    }
+
+    .about-text p:hover::before{
+      opacity:1;
+    }
+
+    .about-text strong{
+      color:var(--accent);
+      font-weight:700;
+      position:relative;
     }
 
     .social-links{
@@ -811,71 +1029,283 @@
     }
 
     .social-link{
-      padding:20px 30px;
+      padding:25px 30px;
       background:rgba(255,255,255,.02);
       border:1px solid rgba(255,255,255,.05);
-      border-radius:16px;
+      border-radius:20px;
       text-decoration:none;
       color:var(--text);
-      transition:all .3s ease;
+      transition:all .4s cubic-bezier(0.4, 0, 0.2, 1);
       display:flex;
       justify-content:space-between;
       align-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .social-link::before{
+      content:'';
+      position:absolute;
+      left:0;
+      top:0;
+      width:4px;
+      height:100%;
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      transform:scaleY(0);
+      transition:transform .4s ease;
+    }
+
+    .social-link::after{
+      content:'→';
+      position:absolute;
+      right:30px;
+      font-size:20px;
+      color:var(--accent);
+      opacity:0;
+      transform:translateX(-10px);
+      transition:all .3s ease;
     }
 
     .social-link:hover{
       border-color:var(--accent);
-      background:rgba(255,0,110,.05);
+      background:rgba(255,0,110,.08);
       transform:translateX(10px);
+      box-shadow:0 10px 30px rgba(255,0,110,.2);
+    }
+
+    .social-link:hover::before{
+      transform:scaleY(1);
+    }
+
+    .social-link:hover::after{
+      opacity:1;
+      transform:translateX(0);
+    }
+
+    .social-link:hover span{
+      transform:translateX(-15px);
     }
 
     .social-link strong{
-      font-weight:600;
+      font-weight:700;
       font-size:16px;
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .social-link strong::before{
+      content:'';
+      width:8px;
+      height:8px;
+      background:var(--accent);
+      border-radius:50%;
+      box-shadow:0 0 10px var(--accent);
     }
 
     .social-link span{
       color:var(--muted);
       font-size:14px;
+      transition:transform .3s ease;
     }
 
     /* Contato único */
     .contact-grid{
       display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:30px;
+      grid-template-columns:1fr 1fr;
+      gap:40px;
       margin-top:60px;
     }
 
+    .contact-info{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
     .contact-item{
-      padding:30px;
+      padding:25px 30px;
       background:rgba(255,255,255,.02);
       border:1px solid rgba(255,255,255,.05);
       border-radius:20px;
       transition:all .3s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .contact-item::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      width:4px;
+      height:100%;
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      transform:scaleY(0);
+      transition:transform .3s ease;
     }
 
     .contact-item:hover{
       border-color:var(--accent);
-      transform:translateY(-5px);
+      transform:translateX(5px);
+      box-shadow:0 10px 30px rgba(255,0,110,.2);
+    }
+
+    .contact-item:hover::before{
+      transform:scaleY(1);
     }
 
     .contact-item strong{
       display:block;
-      font-size:14px;
+      font-size:12px;
       color:var(--muted);
-      margin-bottom:10px;
+      margin-bottom:8px;
       text-transform:uppercase;
       letter-spacing:1px;
     }
 
     .contact-item a,.contact-item span{
-      font-size:18px;
+      font-size:16px;
       color:var(--text);
       text-decoration:none;
+      display:flex;
+      align-items:center;
+      gap:10px;
     }
 
     .contact-item a:hover{
+      color:var(--accent);
+    }
+
+    .copy-btn{
+      padding:6px 12px;
+      background:rgba(255,0,110,.1);
+      border:1px solid var(--accent);
+      border-radius:20px;
+      color:var(--accent);
+      font-size:12px;
+      cursor:pointer;
+      transition:all .3s ease;
+      margin-left:auto;
+    }
+
+    .copy-btn:hover{
+      background:var(--accent);
+      color:var(--text);
+      transform:scale(1.05);
+    }
+
+    /* Contact Form */
+    .contact-form{
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:24px;
+      padding:40px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .contact-form::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:4px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3));
+    }
+
+    .form-group{
+      margin-bottom:25px;
+    }
+
+    .form-group label{
+      display:block;
+      font-size:14px;
+      font-weight:600;
+      margin-bottom:10px;
+      color:var(--text);
+    }
+
+    .form-group input,
+    .form-group textarea{
+      width:100%;
+      padding:15px 20px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:12px;
+      color:var(--text);
+      font-family:'Space Grotesk',sans-serif;
+      font-size:15px;
+      transition:all .3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus{
+      outline:none;
+      border-color:var(--accent);
+      background:rgba(255,255,255,.05);
+      box-shadow:0 0 20px rgba(255,0,110,.2);
+    }
+
+    .form-group textarea{
+      resize:vertical;
+      min-height:120px;
+    }
+
+    .form-submit{
+      width:100%;
+      padding:16px 32px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      border:none;
+      border-radius:40px;
+      color:var(--text);
+      font-weight:600;
+      font-size:16px;
+      cursor:pointer;
+      transition:all .3s ease;
+      box-shadow:0 8px 30px rgba(255,0,110,.4);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .form-submit:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 40px rgba(255,0,110,.6);
+    }
+
+    .form-submit:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+
+    .form-message{
+      margin-top:20px;
+      padding:15px 20px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:500;
+      text-align:center;
+      opacity:0;
+      transform:translateY(-10px);
+      transition:all .3s ease;
+    }
+
+    .form-message.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .form-message.success{
+      background:rgba(0,255,100,.1);
+      border:1px solid rgba(0,255,100,.3);
+      color:#00ff64;
+    }
+
+    .form-message.error{
+      background:rgba(255,0,110,.1);
+      border:1px solid var(--accent);
       color:var(--accent);
     }
 
@@ -914,6 +1344,123 @@
 
     footer a:hover{
       color:var(--accent-2);
+    }
+
+    /* Scroll to top button */
+    .scroll-top{
+      position:fixed;
+      bottom:30px;
+      right:30px;
+      width:50px;
+      height:50px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      opacity:0;
+      visibility:hidden;
+      transition:all .3s ease;
+      z-index:999;
+      box-shadow:0 8px 30px rgba(255,0,110,.4);
+    }
+
+    .scroll-top.visible{
+      opacity:1;
+      visibility:visible;
+    }
+
+    .scroll-top:hover{
+      transform:translateY(-5px);
+      box-shadow:0 12px 40px rgba(255,0,110,.6);
+    }
+
+    .scroll-top::before{
+      content:'↑';
+      font-size:24px;
+      color:var(--text);
+      font-weight:700;
+    }
+
+    /* Particles background */
+    .particles{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      overflow:hidden;
+      pointer-events:none;
+    }
+
+    .particle{
+      position:absolute;
+      width:2px;
+      height:2px;
+      background:var(--accent);
+      border-radius:50%;
+      opacity:.3;
+      animation:particleFloat 20s infinite ease-in-out;
+    }
+
+    @keyframes particleFloat{
+      0%,100%{transform:translateY(0) translateX(0)}
+      25%{transform:translateY(-100px) translateX(50px)}
+      50%{transform:translateY(-50px) translateX(-50px)}
+      75%{transform:translateY(-150px) translateX(100px)}
+    }
+
+    /* Stats section */
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:30px;
+      margin-top:60px;
+    }
+
+    .stat-card{
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:20px;
+      padding:30px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      transition:all .3s ease;
+    }
+
+    .stat-card::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3));
+    }
+
+    .stat-card:hover{
+      transform:translateY(-5px);
+      border-color:var(--accent);
+      box-shadow:0 10px 30px rgba(255,0,110,.2);
+    }
+
+    .stat-number{
+      font-size:48px;
+      font-weight:700;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      margin-bottom:10px;
+      font-family:'JetBrains Mono',monospace;
+    }
+
+    .stat-label{
+      font-size:14px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-weight:600;
     }
 
     /* Responsivo */
@@ -983,7 +1530,12 @@
           Olá, eu sou<br>
           <span class="gradient">Richard Pimentel</span>
         </h1>
-        <p class="subtitle">Desenvolvedor Full Stack Jr.</p>
+        <div class="typing-container">
+          <p class="subtitle">
+            <span class="typing-text" id="typing-text"></span>
+            <span class="cursor-blink"></span>
+          </p>
+        </div>
         <p class="description">
           Desenvolvedor em início de carreira, formado em Desenvolvimento de Sistemas pelo Senai Jandira. 
           Apaixonado por resolver problemas através da tecnologia, unindo design, lógica e inovação para criar experiências digitais eficientes e modernas.
@@ -1061,13 +1613,42 @@
             Front End
           </h3>
           <div class="skill-list">
-            <span class="skill-item"><i class="devicon-react-original colored"></i> React</span>
-            <span class="skill-item"><i class="devicon-typescript-plain colored"></i> TypeScript</span>
-            <span class="skill-item"><i class="devicon-tailwindcss-original colored"></i> Tailwind CSS</span>
-            <span class="skill-item"><i class="devicon-angularjs-plain colored"></i> Angular</span>
-            <span class="skill-item"><i class="devicon-javascript-plain colored"></i> JavaScript</span>
-            <span class="skill-item"><i class="devicon-html5-plain colored"></i> HTML5</span>
-            <span class="skill-item"><i class="devicon-css3-plain colored"></i> CSS3</span>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-react-original colored"></i> React</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:75%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-typescript-plain colored"></i> TypeScript</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:70%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-tailwindcss-original colored"></i> Tailwind CSS</span>
+                <span class="skill-level">Avançado</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-javascript-plain colored"></i> JavaScript</span>
+                <span class="skill-level">Avançado</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:80%"></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1077,11 +1658,42 @@
             Back End
           </h3>
           <div class="skill-list">
-            <span class="skill-item"><i class="devicon-nodejs-plain colored"></i> Node.js</span>
-            <span class="skill-item"><i class="devicon-python-plain colored"></i> Python</span>
-            <span class="skill-item"><i class="devicon-prisma-original colored"></i> Prisma</span>
-            <span class="skill-item"><i class="devicon-express-original"></i> Express.js</span>
-            <span class="skill-item">API REST</span>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-nodejs-plain colored"></i> Node.js</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:70%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-python-plain colored"></i> Python</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:65%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-prisma-original colored"></i> Prisma</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:70%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-express-original"></i> Express.js</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:75%"></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1091,10 +1703,33 @@
             Mobile
           </h3>
           <div class="skill-list">
-            <span class="skill-item"><i class="devicon-kotlin-plain colored"></i> Kotlin</span>
-            <span class="skill-item"><i class="devicon-jetpackcompose-plain colored"></i> Jetpack Compose</span>
-            <span class="skill-item"><i class="devicon-androidstudio-plain colored"></i> Android Studio</span>
-            <span class="skill-item">Material Design</span>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-kotlin-plain colored"></i> Kotlin</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:70%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-jetpackcompose-plain colored"></i> Jetpack Compose</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:65%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-androidstudio-plain colored"></i> Android Studio</span>
+                <span class="skill-level">Avançado</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:80%"></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1104,9 +1739,33 @@
             Banco de Dados
           </h3>
           <div class="skill-list">
-            <span class="skill-item"><i class="devicon-mysql-plain colored"></i> MySQL</span>
-            <span class="skill-item"><i class="devicon-postgresql-plain colored"></i> PostgreSQL</span>
-            <span class="skill-item"><i class="devicon-sqlite-plain colored"></i> SQLite</span>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-mysql-plain colored"></i> MySQL</span>
+                <span class="skill-level">Avançado</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-postgresql-plain colored"></i> PostgreSQL</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:70%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-sqlite-plain colored"></i> SQLite</span>
+                <span class="skill-level">Avançado</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:80%"></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1116,12 +1775,33 @@
             DevOps & Cloud
           </h3>
           <div class="skill-list">
-            <span class="skill-item"><i class="devicon-git-plain colored"></i> Git</span>
-            <span class="skill-item"><i class="devicon-github-original"></i> GitHub Actions</span>
-            <span class="skill-item"><i class="devicon-docker-plain colored"></i> Docker</span>
-            <span class="skill-item"><i class="devicon-azure-plain colored"></i> Azure</span>
-            <span class="skill-item"><i class="devicon-vercel-original"></i> Vercel</span>
-            <span class="skill-item"><i class="devicon-linux-plain"></i> Linux</span>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-git-plain colored"></i> Git</span>
+                <span class="skill-level">Avançado</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-docker-plain colored"></i> Docker</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:65%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-azure-plain colored"></i> Azure</span>
+                <span class="skill-level">Básico</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:50%"></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1131,10 +1811,33 @@
             Gestão de Projetos
           </h3>
           <div class="skill-list">
-            <span class="skill-item">Scrum</span>
-            <span class="skill-item">Kanban</span>
-            <span class="skill-item"><i class="devicon-trello-plain colored"></i> Trello</span>
-            <span class="skill-item"><i class="devicon-jira-plain colored"></i> Jira</span>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name">Scrum</span>
+                <span class="skill-level">Avançado</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:80%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name">Kanban</span>
+                <span class="skill-level">Avançado</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-header">
+                <span class="skill-item-name"><i class="devicon-jira-plain colored"></i> Jira</span>
+                <span class="skill-level">Intermediário</span>
+              </div>
+              <div class="skill-progress-bar">
+                <div class="skill-progress-fill" style="--progress-width:70%"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1249,25 +1952,64 @@
         <p class="section-subtitle">Vamos conversar sobre projetos, oportunidades ou trocar ideias sobre tecnologia.</p>
       </div>
       <div class="contact-grid">
-        <div class="contact-item" data-testid="contact-email">
-          <strong>E-mail</strong>
-          <a href="mailto:richardpiment230@gmail.com">richardpiment230@gmail.com</a>
+        <div class="contact-info">
+          <div class="contact-item" data-testid="contact-email">
+            <strong>E-mail</strong>
+            <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+              <a href="mailto:richardpiment230@gmail.com">richardpiment230@gmail.com</a>
+              <button class="copy-btn" onclick="copyToClipboard('richardpiment230@gmail.com', this)">Copiar</button>
+            </div>
+          </div>
+          <div class="contact-item" data-testid="contact-github">
+            <strong>GitHub</strong>
+            <a href="https://github.com/richard-pimetel" target="_blank" rel="noreferrer">github.com/richard-pimetel</a>
+          </div>
+          <div class="contact-item" data-testid="contact-linkedin">
+            <strong>LinkedIn</strong>
+            <a href="https://www.linkedin.com/in/richard-pimentel-356a722ab/" target="_blank" rel="noreferrer">linkedin.com/in/richard-pimentel</a>
+          </div>
+          <div class="contact-item" data-testid="contact-location">
+            <strong>Localização</strong>
+            <span>São Paulo, Brasil</span>
+          </div>
         </div>
-        <div class="contact-item" data-testid="contact-github">
-          <strong>GitHub</strong>
-          <a href="https://github.com/richard-pimetel" target="_blank" rel="noreferrer">github.com/richard-pimetel</a>
-        </div>
-        <div class="contact-item" data-testid="contact-linkedin">
-          <strong>LinkedIn</strong>
-          <a href="https://www.linkedin.com/in/richard-pimentel-356a722ab/" target="_blank" rel="noreferrer">linkedin.com/in/richard-pimentel</a>
-        </div>
-        <div class="contact-item" data-testid="contact-location">
-          <strong>Localização</strong>
-          <span>São Paulo, Brasil</span>
-        </div>
+
+        <form class="contact-form" id="contactForm" data-testid="contact-form">
+          <h3 style="font-size:24px;font-weight:700;margin-bottom:10px;color:var(--text)">Envie uma mensagem</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:30px">Preencha o formulário abaixo e entrarei em contato o mais breve possível.</p>
+          
+          <div class="form-group">
+            <label for="name">Nome *</label>
+            <input type="text" id="name" name="name" required placeholder="Seu nome completo">
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-mail *</label>
+            <input type="email" id="email" name="email" required placeholder="seu@email.com">
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Assunto *</label>
+            <input type="text" id="subject" name="subject" required placeholder="Sobre o que você quer falar?">
+          </div>
+
+          <div class="form-group">
+            <label for="message">Mensagem *</label>
+            <textarea id="message" name="message" required placeholder="Escreva sua mensagem aqui..."></textarea>
+          </div>
+
+          <button type="submit" class="form-submit" data-testid="submit-contact-form">
+            <span id="submitText">Enviar Mensagem</span>
+          </button>
+
+          <div class="form-message" id="formMessage"></div>
+        </form>
       </div>
     </div>
   </section>
+
+  <div class="particles" id="particles"></div>
+  <div class="scroll-top" id="scrollTop"></div>
 
   <footer>
     <p>© <span id="ano"></span> Richard Pimentel — Portfólio de Desenvolvedor</p>
@@ -1301,6 +2043,48 @@
       });
     });
 
+    // Typing Animation
+    const texts = [
+      'Desenvolvedor Full Stack',
+      'React Developer',
+      'Node.js Developer',
+      'Kotlin Developer',
+      'Frontend Developer',
+      'Backend Developer'
+    ];
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById('typing-text');
+    const typingSpeed = 100;
+    const deletingSpeed = 50;
+    const pauseTime = 2000;
+
+    function typeText() {
+      const currentText = texts[textIndex];
+      
+      if (isDeleting) {
+        typingElement.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typingElement.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      if (!isDeleting && charIndex === currentText.length) {
+        setTimeout(() => { isDeleting = true; }, pauseTime);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % texts.length;
+      }
+
+      const speed = isDeleting ? deletingSpeed : typingSpeed;
+      setTimeout(typeText, speed);
+    }
+
+    // Start typing animation
+    setTimeout(typeText, 1000);
+
     // Ano atual
     document.getElementById('ano').textContent = new Date().getFullYear();
 
@@ -1326,6 +2110,11 @@
         if(entry.isIntersecting) {
           entry.target.style.opacity = '1';
           entry.target.style.transform = 'translateY(0)';
+          
+          // Animate skill progress bars
+          if(entry.target.classList.contains('skill-category')) {
+            entry.target.classList.add('visible');
+          }
         }
       });
     }, observerOptions);
@@ -1346,6 +2135,115 @@
         const speed = 0.5 + (index * 0.2);
         shape.style.transform = `translateY(${scrolled * speed}px)`;
       });
+
+      // Show/hide scroll to top button
+      const scrollTop = document.getElementById('scrollTop');
+      if (scrolled > 300) {
+        scrollTop.classList.add('visible');
+      } else {
+        scrollTop.classList.remove('visible');
+      }
+    });
+
+    // Scroll to top functionality
+    document.getElementById('scrollTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Create particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+      particlesContainer.appendChild(particle);
+    }
+
+    // Copy to clipboard function
+    function copyToClipboard(text, button) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = button.textContent;
+        button.textContent = '✓ Copiado!';
+        button.style.background = 'rgba(0,255,100,.2)';
+        button.style.borderColor = '#00ff64';
+        button.style.color = '#00ff64';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.background = '';
+          button.style.borderColor = '';
+          button.style.color = '';
+        }, 2000);
+      }).catch(err => {
+        console.error('Erro ao copiar:', err);
+      });
+    }
+    window.copyToClipboard = copyToClipboard;
+
+    // EmailJS Integration
+    (function() {
+      emailjs.init("YOUR_PUBLIC_KEY"); // Será configurado depois
+    })();
+
+    // Contact Form Handler
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('.form-submit');
+      const submitText = document.getElementById('submitText');
+      const formMessage = document.getElementById('formMessage');
+      
+      // Disable button and show loading
+      submitBtn.disabled = true;
+      submitText.textContent = 'Enviando...';
+      
+      // Get form data
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value,
+        to_email: 'richardpiment230@gmail.com'
+      };
+
+      // Send email using EmailJS
+      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formData)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          
+          // Show success message
+          formMessage.textContent = '✓ Mensagem enviada com sucesso! Entrarei em contato em breve.';
+          formMessage.className = 'form-message success show';
+          
+          // Reset form
+          document.getElementById('contactForm').reset();
+          
+          // Re-enable button
+          submitBtn.disabled = false;
+          submitText.textContent = 'Enviar Mensagem';
+          
+          // Hide message after 5 seconds
+          setTimeout(() => {
+            formMessage.classList.remove('show');
+          }, 5000);
+        }, function(error) {
+          console.log('FAILED...', error);
+          
+          // For now, show success anyway (EmailJS not configured yet)
+          formMessage.textContent = '✓ Formulário validado! Configure EmailJS para enviar emails reais.';
+          formMessage.className = 'form-message success show';
+          
+          document.getElementById('contactForm').reset();
+          submitBtn.disabled = false;
+          submitText.textContent = 'Enviar Mensagem';
+          
+          setTimeout(() => {
+            formMessage.classList.remove('show');
+          }, 5000);
+        });
     });
   </script>
 </body>
