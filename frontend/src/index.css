@@ -1,0 +1,82 @@
+/* ============================================================
+   PORTFOLIO RICHARD PIMENTEL - Global Styles
+   ============================================================ */
+
+/* ---- THEME VARIABLES ---- */
+:root {
+  /* Dark Theme (Default) */
+  --bg-primary: #0a1628;
+  --bg-secondary: #111d35;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.15);
+  --text-primary: #f0f0f5;
+  --text-secondary: #8892a8;
+  --text-muted: #5c6680;
+  --accent: #ff3d71;
+  --accent-2: #7b61ff;
+  --accent-3: #3b82f6;
+  --glow: rgba(255, 61, 113, 0.4);
+  --glow-soft: rgba(255, 61, 113, 0.15);
+  --header-bg: rgba(10, 22, 40, 0.75);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --card-shadow-hover: 0 16px 48px rgba(255, 61, 113, 0.15);
+}
+
+[data-theme="light"] {
+  --bg-primary: #f5f2ee;
+  --bg-secondary: #ede8e2;
+  --bg-card: rgba(0, 0, 0, 0.03);
+  --bg-card-hover: rgba(0, 0, 0, 0.05);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.2);
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --text-muted: #7a7a9a;
+  --accent: #e63362;
+  --accent-2: #6b4fdf;
+  --accent-3: #2563eb;
+  --glow: rgba(230, 51, 98, 0.3);
+  --glow-soft: rgba(230, 51, 98, 0.1);
+  --header-bg: rgba(245, 242, 238, 0.85);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 16px 48px rgba(230, 51, 98, 0.1);
+}
+
+/* ---- RESET ---- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+a { text-decoration: none; color: inherit; }
+button { border: none; background: none; cursor: pointer; font-family: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ---- SCROLLBAR ---- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+/* ---- GLOBAL UTILS ---- */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
