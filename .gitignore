@@ -4,3 +4,7 @@ frontend/
 memory/
 node_modules/
 .env
+-e 
+# Environment files
+*.env
+*.env.*
