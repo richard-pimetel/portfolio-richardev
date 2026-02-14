@@ -1,52 +1,60 @@
 # PRD - Portfolio Richard Pimentel
 
 ## Problem Statement
-Portfolio pessoal de Richard Pimentel - Desenvolvedor Full Stack. O usuario pediu melhorias visuais e de interatividade no portfolio existente.
+Portfolio profissional de Richard Pimentel - Desenvolvedor Full Stack. V2: melhorias massivas em visual, competencias, credibilidade e estrutura de imagens.
 
 ## Architecture
-- **Frontend**: React app (port 3000) + Standalone HTML (`/app/index.html`)
-- **Backend**: FastAPI minimal (port 8001) - health endpoint
-- **No database required** - static portfolio
+- **Portfolio**: Single HTML file (`/app/index.html`) - 100% standalone
+- **Images**: Pasta `/app/images/` para imagens locais (projects/ e profile/)
+- **No backend required** - Static portfolio
 
 ## User Persona
 - Richard Pimentel - Desenvolvedor Full Stack Junior
 - Publico alvo: Recrutadores e empresas de tecnologia
 
-## Core Requirements
-1. Toggle de tema claro/escuro
-2. Cursor padrao (removido cursor:none)
-3. Habilidades em abas (Frontend, Backend, Banco de Dados, Mobile, DevOps, Gestao de Projetos)
-4. Imagens nos projetos com links separados para facil modificacao
-5. Fundo navy atrativo ao inves de preto puro
-6. Links e imagens separados em constantes no codigo para facil edicao
-
 ## What's Been Implemented (Jan 2026)
-- [x] Toggle tema claro/escuro com icones sol/lua
-- [x] Habilidades com navegacao por abas (6 categorias)
-- [x] Cards de projetos com imagens placeholder e overlay hover
-- [x] Fundo navy (#0a1628) com formas geometricas animadas
-- [x] Links e imagens em constantes organizadas no topo do codigo
-- [x] Menu responsivo mobile com burger menu
-- [x] Scroll to top button
-- [x] Formulario de contato com EmailJS
-- [x] Efeito typing no hero
-- [x] Scroll reveal animations
-- [x] `/app/index.html` standalone atualizado para deploy direto
 
-## Prioritized Backlog
-### P0 (Done)
-- Todas as features solicitadas implementadas
+### V1 (Sessao 1)
+- [x] Toggle tema claro/escuro
+- [x] Habilidades com abas (6 categorias)
+- [x] Cards de projetos com imagens
+- [x] Fundo navy com animacoes
 
+### V2 (Sessao 2 - Melhorias massivas)
+- [x] Competencias com icones coloridos, descricoes e hover effects
+- [x] Stats counter animado (Projetos, Tecnologias, Experiencia, Dedicacao)
+- [x] Tools marquee infinito com icones de todas tecnologias
+- [x] Avatar com borda conica animada + badges flutuantes (React, Node.js, SQL)
+- [x] Background grid pattern sutil
+- [x] Section tags e accent lines nos headers
+- [x] Tech tags nos cards de projetos
+- [x] FontAwesome icons em todo o site
+- [x] About section com cards melhorados (icones, setas, cores)
+- [x] WhatsApp card adicionado
+- [x] Pasta /app/images/ criada com README de instrucoes
+- [x] .gitignore configurado para excluir pastas do ambiente de preview
+
+## Estrutura de Imagens
+```
+images/
+  README.md          - Instrucoes de uso
+  profile/
+    avatar.jpg       - Foto de perfil
+  projects/
+    planilha.jpg     - Screenshot Planilha de Arquivos
+    geografia.jpg    - Screenshot Geografia One
+    matematica.jpg   - Screenshot Matematica
+    certiseg.jpg     - Screenshot CertiSeg
+    tarot.jpg        - Screenshot Carta de Tarot
+```
+
+## Backlog
 ### P1
-- Substituir imagens placeholder por screenshots reais dos projetos
-- Adicionar mais projetos ao portfolio
+- Substituir imagens placeholder por screenshots reais
+- Adicionar foto real de perfil
 
 ### P2
-- Adicionar secao de certificacoes
-- Integrar blog/artigos tecnicos
-- Adicionar animacao de loading inicial
-- SEO otimizado com meta tags Open Graph
-
-## Next Tasks
-- Usuario trocar as imagens placeholder pelas reais (editar constante PROJECT_IMAGES no index.html)
-- Considerar adicionar secao de depoimentos/recomendacoes
+- Secao de certificacoes
+- Blog/artigos tecnicos
+- SEO com Open Graph completo
+- Integracao com n8n para automacoes
