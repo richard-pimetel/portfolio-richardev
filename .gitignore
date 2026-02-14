@@ -1,12 +1,6 @@
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
+# Pastas do ambiente de preview (nao fazem parte do portfolio)
+backend/
+frontend/
+memory/
+node_modules/
+.env
